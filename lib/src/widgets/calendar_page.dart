@@ -1,11 +1,13 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CalendarPage extends StatelessWidget {
   final Widget Function(BuildContext context, DateTime day)? dowBuilder;
   final Widget Function(BuildContext context, DateTime day) dayBuilder;
+  final Widget? loadingDays;
   final List<DateTime> visibleDays;
   final Decoration? dowDecoration;
   final Decoration? rowDecoration;
@@ -16,6 +18,7 @@ class CalendarPage extends StatelessWidget {
     required this.visibleDays,
     this.dowBuilder,
     required this.dayBuilder,
+    this.loadingDays,
     this.dowDecoration,
     this.rowDecoration,
     this.dowVisible = true,
@@ -24,6 +27,9 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (loadingDays != null) {
+      return _buildLoadingDays(context);
+    }
     return Table(
       children: [
         if (dowVisible) _buildDaysOfWeek(context),
@@ -54,5 +60,16 @@ class CalendarPage extends StatelessWidget {
               ),
             ))
         .toList();
+  }
+
+  Widget _buildLoadingDays(BuildContext context) {
+    return Column(children: [
+      Table(children: [
+        if (dowVisible) _buildDaysOfWeek(context),
+      ]),
+      Expanded(
+        child: loadingDays!,
+      )
+    ]);
   }
 }

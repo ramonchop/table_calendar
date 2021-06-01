@@ -3,6 +3,7 @@
 
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
@@ -196,12 +197,15 @@ class TableCalendar<T> extends StatefulWidget {
   /// Called when the calendar is created. Exposes its PageController.
   final void Function(PageController pageController)? onCalendarCreated;
 
+  final Widget? loading;
+
   /// Creates a `TableCalendar` widget.
   TableCalendar({
     Key? key,
     required DateTime focusedDay,
     required DateTime firstDay,
     required DateTime lastDay,
+    this.loading,
     this.locale,
     this.rangeStartDay,
     this.rangeEndDay,
@@ -472,6 +476,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
               _pageController = pageController;
               widget.onCalendarCreated?.call(pageController);
             },
+            loading: widget.loading,
             focusedDay: _focusedDay.value,
             calendarFormat: widget.calendarFormat,
             availableGestures: widget.availableGestures,

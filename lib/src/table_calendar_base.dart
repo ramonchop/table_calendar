@@ -23,6 +23,7 @@ class TableCalendarBase extends StatefulWidget {
   final Duration formatAnimationDuration;
   final Curve formatAnimationCurve;
   final bool pageAnimationEnabled;
+  final Widget? loading;
   final Duration pageAnimationDuration;
   final Curve pageAnimationCurve;
   final StartingDayOfWeek startingDayOfWeek;
@@ -35,6 +36,7 @@ class TableCalendarBase extends StatefulWidget {
 
   TableCalendarBase({
     Key? key,
+    this.loading,
     required this.firstDay,
     required this.lastDay,
     required this.focusedDay,
@@ -200,6 +202,7 @@ class _TableCalendarBaseState extends State<TableCalendarBase>
               );
             },
             child: CalendarCore(
+              loadingDays: widget.loading,
               constraints: constraints,
               pageController: _pageController,
               scrollPhysics: _canScrollHorizontally
